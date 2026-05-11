@@ -18,7 +18,7 @@ Este proyecto implementa una arquitectura basada en eventos para el procesamient
 
 ### Contexto
 
-![Diagrama C1 - Contexto](assets/c1_contexto.png)
+![Diagrama C1 - Contexto](assets/C1_contexto.jpeg)
 
 #### Función del sistema
 
@@ -59,7 +59,7 @@ Redes → Adquirente → PayFlow → Comercio
 
 ### Contenedores
 
-![Diagrama C2 - Contenedores](assets/c2_contenedores.png)
+![Diagrama C2 - Contenedores](assets/c2_contenedores.jpeg)
 
 #### Función del sistema
 
@@ -113,7 +113,7 @@ Cada uno de los 5 diagramas C3 describe el comportamiento interno de un componen
 
 #### C3 — Bases de Datos Transacciones
 
-![Diagrama C3 - Bases de Datos](assets/c3_bases_datos.png)
+![Diagrama C3 - Bases de Datos](assets/c3_bases_datos.jpeg)
 
 **Función del componente**
 
@@ -146,7 +146,7 @@ Flujo de optimización: Motor de Persistencia → Gestor de Índices
 
 #### C3 — Bus de Eventos
 
-![Diagrama C3 - Bus de Eventos](assets/c3_bus_eventos.png)
+![Diagrama C3 - Bus de Eventos](assets/c3_bus_eventos.jpeg)
 
 **Función del componente**
 
@@ -181,7 +181,7 @@ Integración con sistemas legados: Sistema Legado PayFlow → Receptor de Evento
 
 #### C3 — Cola de Alta Prioridad
 
-![Diagrama C3 - Cola de Alta Prioridad](assets/c3_cola_alta_prioridad.png)
+![Diagrama C3 - Cola de Alta Prioridad](assets/c3_cola_alta_prioridad.jpeg)
 
 **Función del sistema**
 
@@ -252,7 +252,7 @@ Notificación final: notificarComercio → Comercio/cliente externo
 
 #### C3 — Sistema de Monitoreo
 
-![Diagrama C3 - Sistema de Monitoreo](assets/c3_sistema_monitoreo.png)
+![Diagrama C3 - Sistema de Monitoreo](assets/c3_sistema_monitoreo.jpeg)
 
 **Función del sistema**
 
