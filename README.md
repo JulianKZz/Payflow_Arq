@@ -18,11 +18,11 @@ Este proyecto implementa una arquitectura basada en eventos para el procesamient
 
 ### Contexto
 
-![Diagrama C1 - Contexto](assets/C1_contexto.jpeg)
-
 #### Función del sistema
 
 El sistema **PayFlow** procesa pagos en tiempo real. Recibe transacciones desde comercios y canales digitales, las envía al adquirente bancario para autorización y retorna el resultado del pago.
+
+![Diagrama C1 - Contexto](assets/C1_contexto.jpeg)
 
 #### Componentes principales
 
@@ -59,11 +59,11 @@ Redes → Adquirente → PayFlow → Comercio
 
 ### Contenedores
 
-![Diagrama C2 - Contenedores](assets/c2_contenedores.jpeg)
-
 #### Función del sistema
 
 El sistema **PayFlow Payment Processing System** procesa transacciones de pago mediante una arquitectura basada en eventos. Recibe pagos desde terminales POS y canales digitales, envía los eventos al Bus de Eventos, donde posteriormente son procesados, validados y enrutados por el Procesador de Transacciones. Luego, las transacciones son almacenadas en la Base de Datos y enviadas al adquirente bancario para obtener la autorización financiera. Además, el sistema incorpora monitoreo, alertas y manejo prioritario de transacciones de alto valor.
+
+![Diagrama C2 - Contenedores](assets/c2_contenedores.jpeg)
 
 #### Componentes principales
 
@@ -113,11 +113,11 @@ Cada uno de los 5 diagramas C3 describe el comportamiento interno de un componen
 
 #### C3 — Bases de Datos Transacciones
 
-![Diagrama C3 - Bases de Datos](assets/c3_bases_datos.jpeg)
-
 **Función del componente**
 
 La Base de Datos de Transacciones se encarga de almacenar, actualizar y exponer la información de las transacciones procesadas por PayFlow. Su función principal es garantizar la persistencia del estado final de cada operación financiera y permitir consultas rápidas y seguras para monitoreo, auditoría y análisis.
+
+![Diagrama C3 - Bases de Datos](assets/c3_bases_datos.jpeg)
 
 **Componentes principales**
 
@@ -146,11 +146,11 @@ Flujo de optimización: Motor de Persistencia → Gestor de Índices
 
 #### C3 — Bus de Eventos
 
-![Diagrama C3 - Bus de Eventos](assets/c3_bus_eventos.jpeg)
-
 **Función del componente**
 
 El Bus de Eventos se encarga de recibir, validar, organizar y distribuir los eventos de transacciones dentro del sistema PayFlow. Su función principal es garantizar una comunicación desacoplada y confiable entre los canales de pago y el Procesador de Transacciones, asegurando que ningún evento se pierda durante el flujo de procesamiento.
+
+![Diagrama C3 - Bus de Eventos](assets/c3_bus_eventos.jpeg)
 
 **Componentes principales**
 
@@ -181,11 +181,11 @@ Integración con sistemas legados: Sistema Legado PayFlow → Receptor de Evento
 
 #### C3 — Cola de Alta Prioridad
 
-![Diagrama C3 - Cola de Alta Prioridad](assets/c3_cola_alta_prioridad.jpeg)
-
 **Función del sistema**
 
 El sistema PayFlow gestiona una cola de alta prioridad para procesar transacciones financieras críticas mayores a 5 millones COP. Recibe mensajes vía AMQP, clasifica su prioridad, administra el orden de procesamiento y ejecuta reintentos automáticos en caso de fallos para garantizar la entrega confiable.
+
+![Diagrama C3 - Cola de Alta Prioridad](assets/c3_cola_alta_prioridad.jpeg)
 
 **Componentes principales**
 
@@ -211,11 +211,11 @@ Flujo de recuperación y reintentos: Gestor de Cola → Manejador de Reintentos 
 
 #### C3 — Procesador de Transacciones
 
-![Diagrama C3 - Procesador de Transacciones](assets/c3_procesador_transacciones.png)
-
 **Función del sistema**
 
 El sistema PayFlow procesa eventos de transacciones financieras en tiempo real. Valida la información de la transacción, aplica controles antifraude, enruta operaciones según prioridad, registra el resultado final y notifica al comercio. Además, integra una cola de alta prioridad para transacciones mayores a 5 millones COP y garantiza persistencia y reprocesamiento confiable.
+
+![Diagrama C3 - Procesador de Transacciones](assets/c3_procesador_transacciones.png)
 
 **Componentes principales**
 
@@ -252,11 +252,11 @@ Notificación final: notificarComercio → Comercio/cliente externo
 
 #### C3 — Sistema de Monitoreo
 
-![Diagrama C3 - Sistema de Monitoreo](assets/c3_sistema_monitoreo.jpeg)
-
 **Función del sistema**
 
 El sistema de monitoreo de PayFlow supervisa en tiempo real el rendimiento, disponibilidad y comportamiento de los servicios internos. Centraliza métricas y logs, detecta anomalías, genera alertas operativas y proporciona visibilidad continua al Equipo de Operaciones y al Equipo de Riesgo.
+
+![Diagrama C3 - Sistema de Monitoreo](assets/c3_sistema_monitoreo.jpeg)
 
 **Componentes principales**
 
