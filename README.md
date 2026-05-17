@@ -401,67 +401,126 @@ La implementación demuestra un flujo completo basado en eventos donde las trans
 
 ---
 
-## Flujo de procesamiento
+## Flujo de procesamiento de transacciones
 
-- Generación de eventos de transacción mediante script en Python
-- Ingesta de eventos en Azure Event Hubs
-- Procesamiento en Azure Functions con validación y detección básica de fraude
-- Enrutamiento de transacciones de alto valor hacia Azure Service Bus
-- Persistencia del estado de las transacciones en Cosmos DB
-- Monitoreo del sistema mediante Azure Monitor y Application Insights
+La solución propuesta para PayFlow implementa una arquitectura orientada a eventos (Event-Driven Architecture) diseñada para soportar procesamiento de transacciones financieras en tiempo real, garantizando desacoplamiento entre componentes, alta escalabilidad, resiliencia operativa y capacidad de crecimiento progresivo hacia escenarios productivos de alta demanda.
+
+El flujo completo inicia con la generación de eventos de transacción mediante un script desarrollado en Python, el cual simula el comportamiento de terminales POS, canales digitales y sistemas externos que originan operaciones financieras. Cada evento contiene información relevante de la transacción, como identificador, monto, comercio, timestamp y estado inicial de procesamiento.
+
+Posteriormente, los eventos son enviados al Bus de Eventos implementado sobre Azure Event Hubs, el cual actúa como capa de ingesta distribuida y desacoplada. Este componente permite absorber grandes volúmenes de transacciones concurrentes sin impactar directamente los sistemas consumidores, funcionando como un buffer altamente escalable y resiliente. Gracias a su modelo basado en particiones y comunicación asíncrona mediante AMQP, el sistema puede soportar escenarios de alta concurrencia manteniendo estabilidad operativa y baja latencia.
+
+Una vez recibidos los eventos, Azure Functions ejecuta el procesamiento principal de cada transacción en tiempo real. Dentro de este flujo se implementan validaciones funcionales y controles antifraude básicos, verificando la integridad de los datos, campos obligatorios, formatos válidos y reglas de negocio definidas para el procesamiento financiero. Este enfoque serverless permite escalabilidad automática basada en la carga transaccional, optimizando costos y recursos computacionales.
+
+Como parte de la lógica de negocio, las transacciones cuyo monto supera los $5.000.000 COP son identificadas y enrutadas dinámicamente hacia Azure Service Bus, utilizando un flujo prioritario independiente. Este mecanismo garantiza mayor confiabilidad, trazabilidad y resiliencia para operaciones críticas de alto valor financiero. Además, el uso de colas avanzadas permite incorporar capacidades como reintentos automáticos, manejo de errores y procesamiento desacoplado sin afectar el flujo principal de transacciones.
+
+Después del procesamiento y validación, el estado final de cada transacción es persistido en Cosmos DB, utilizando un modelo flexible basado en documentos JSON. Esta estrategia permite almacenar distintos tipos de operaciones financieras sin depender de esquemas rígidos, facilitando la evolución futura del sistema. Cosmos DB proporciona baja latencia de escritura, alta disponibilidad y capacidad de escalabilidad horizontal, características fundamentales para arquitecturas financieras orientadas a eventos.
+
+De manera transversal, toda la solución es monitoreada mediante Azure Monitor y Application Insights, permitiendo centralizar métricas operativas, logs, trazabilidad distribuida y alertas automáticas. Esto proporciona visibilidad completa sobre el comportamiento del sistema, facilitando la detección temprana de errores, cuellos de botella y anomalías en tiempo real.
 
 ---
 
 ## Evidencias de implementación
 
-Se incluyen evidencias del funcionamiento del sistema:
+Como parte del desarrollo de la arquitectura propuesta, se generaron evidencias funcionales que validan el comportamiento integral del flujo de procesamiento de transacciones implementado para PayFlow.
 
-- Generación de eventos de transacción
-- Procesamiento en Azure Functions
-- Enrutamiento de transacciones de alto valor
-- Persistencia en Cosmos DB (simulado)
+Las evidencias permiten demostrar la interacción entre los componentes principales de la arquitectura, validando tanto el flujo estándar como el procesamiento prioritario de transacciones críticas.
+
+Entre las principales evidencias implementadas se incluyen:
+
+Generación de eventos de transacción mediante simulación controlada.
+Recepción y procesamiento de eventos en Azure Functions.
+Validación funcional y evaluación básica antifraude.
+Enrutamiento dinámico de transacciones de alto valor hacia Azure Service Bus.
+Persistencia del estado final de las transacciones en Cosmos DB simulado.
+Registro de métricas y eventos operativos para observabilidad.
+Validación del desacoplamiento entre componentes mediante comunicación asíncrona.
+
+Todas las evidencias del funcionamiento del sistema se encuentran organizadas dentro de la carpeta /assets, permitiendo verificar visualmente la ejecución de cada etapa del flujo arquitectónico.
 
 Las evidencias se encuentran en la carpeta `/assets`.
 
-### Evidencia de ejecución del flujo
+### Evidencia de ejecución del flujo transaccional
 
-Capturas del sistema en ejecución mostrando:
 
-- Generación de eventos de transacciones (simulación del Event Hub)
-- Procesamiento y validación en Azure Functions
-- Enrutamiento de transacciones de alto valor
-- Registro de transacciones en Cosmos DB
-- Métricas simuladas de observabilidad
+Las capturas y registros generados durante la ejecución del sistema permiten evidenciar el comportamiento operativo de la arquitectura event-driven implementada.
 
-Las evidencias mostradas están directamente relacionadas con el código del directorio `/src`, el cual implementa:
+Las evidencias muestran:
 
-- `event_generator.py` → generación de eventos
-- `function_validate.py` → validación antifraude
-- `service_bus_sim.py` → enrutamiento de alto valor
-- `cosmos_sim.py` → persistencia de datos
-- `monitor.py` → métricas del sistema
+Simulación de generación de eventos financieros desde canales externos.
+Publicación de eventos hacia el Bus de Eventos.
+Procesamiento concurrente de transacciones mediante Azure Functions.
+Validación de reglas antifraude y consistencia de datos.
+Clasificación de transacciones según el monto procesado.
+Enrutamiento prioritario de operaciones críticas hacia Azure Service Bus.
+Persistencia del resultado final de las transacciones en Cosmos DB.
+Registro de métricas operativas y trazabilidad del sistema.
+Simulación de monitoreo y observabilidad centralizada.
+
+Las evidencias presentadas se encuentran directamente relacionadas con los componentes implementados en el directorio /src, donde cada módulo representa una responsabilidad específica dentro de la arquitectura:
+
+event_generator.py
+Responsable de la simulación y generación de eventos de transacción.
+function_validate.py
+Implementa el procesamiento principal, validación de datos y reglas básicas antifraude.
+service_bus_sim.py
+Gestiona el flujo prioritario y el enrutamiento de transacciones de alto valor.
+cosmos_sim.py
+Simula la persistencia distribuida y el almacenamiento del estado transaccional.
+monitor.py
+Centraliza métricas operativas, logs y simulación de observabilidad.
+
+Esta separación de responsabilidades mantiene coherencia con los principios de arquitectura desacoplada definidos en los ADR y representados en los diagramas C4 del sistema.
 
 ---
 
-## Observabilidad
+## Observabilidad y monitoreo operativo
 
-El sistema permite simular métricas de monitoreo como:
+La arquitectura incorpora un enfoque de observabilidad orientado a monitoreo continuo y análisis operacional en tiempo real, permitiendo evaluar el comportamiento del sistema durante la ejecución de transacciones financieras.
 
-- Throughput de eventos
-- Tasa de errores
-- Transacciones aprobadas, rechazadas y en revisión
-- Latencia de procesamiento
+A través de Azure Monitor y Application Insights se simulan métricas relevantes para la operación del negocio, incluyendo:
+
+Throughput de eventos procesados por segundo.
+Latencia promedio de procesamiento transaccional.
+Tasa de errores y fallos operativos.
+Cantidad de transacciones aprobadas.
+Cantidad de transacciones rechazadas.
+Transacciones enviadas a revisión.
+Eventos reenviados para reprocesamiento.
+Métricas de comportamiento del flujo prioritario.
+Registro centralizado de logs y trazabilidad.
+
+Este modelo de monitoreo permite detectar anomalías operativas de manera temprana y proporciona visibilidad completa sobre el estado de la plataforma, alineándose con los requerimientos de resiliencia y observabilidad definidos para PayFlow.
 
 ---
 
 ## Conclusiones
 
-La arquitectura event-driven implementada permite desacoplar los componentes del sistema, mejorar la escalabilidad y garantizar el procesamiento eficiente de transacciones. El uso de Azure Event Hubs y Azure Functions permite manejar altos volúmenes de eventos en tiempo real, mientras que Service Bus habilita el enrutamiento de transacciones de alto valor. Cosmos DB asegura la persistencia escalable y Azure Monitor proporciona visibilidad del comportamiento del sistema.
+La arquitectura event-driven diseñada para PayFlow permite transformar un modelo monolítico tradicional en una plataforma desacoplada, escalable y preparada para escenarios de procesamiento financiero en tiempo real.
+
+La adopción de Azure Event Hubs como mecanismo principal de ingesta elimina el cuello de botella presente en la arquitectura original, permitiendo manejar grandes volúmenes de transacciones concurrentes mediante comunicación asíncrona y procesamiento distribuido.
+
+Azure Functions proporciona un modelo serverless flexible y altamente escalable para ejecutar validaciones, reglas antifraude y lógica de negocio en tiempo real, reduciendo tiempos de respuesta y optimizando el consumo de recursos.
+
+El uso de Azure Service Bus para transacciones superiores a $5.000.000 COP introduce un flujo prioritario con mayores garantías de confiabilidad, trazabilidad y resiliencia operativa, aspecto fundamental en escenarios financieros críticos.
+
+Cosmos DB garantiza persistencia distribuida de baja latencia y capacidad de crecimiento horizontal, permitiendo almacenar distintos tipos de transacciones bajo un modelo flexible orientado a eventos.
+
+Finalmente, Azure Monitor y Application Insights proporcionan observabilidad integral del ecosistema, permitiendo monitoreo continuo, generación de alertas y análisis operativo centralizado.
+
+En conjunto, la solución propuesta demuestra cómo una arquitectura cloud-native basada en servicios administrados de Azure puede satisfacer requerimientos de escalabilidad, disponibilidad, desacoplamiento y monitoreo en plataformas financieras modernas.
 
 **Estado del proyecto**
 
-- Simulación funcional completa del flujo de transacciones
-- Implementación de arquitectura basada en eventos
-- Documentación de ADRs
-- Diagramas C4 incluidos
-- Validación del flujo end-to-end
+El proyecto cuenta con los siguientes componentes funcionales y arquitectónicos:
+
+Simulación funcional completa del flujo de transacciones financieras.
+Implementación de arquitectura basada en eventos (Event-Driven Architecture).
+Integración desacoplada entre componentes mediante comunicación AMQP.
+Implementación de procesamiento prioritario para transacciones críticas.
+Persistencia distribuida simulada mediante Cosmos DB.
+Sistema de monitoreo y observabilidad integrado.
+Validación funcional del flujo extremo a extremo.
+Definición y documentación formal de decisiones arquitectónicas (ADR).
+Modelado arquitectónico completo mediante diagramas C4 (C1, C2 y C3).
+Coherencia arquitectónica validada entre requerimientos, ADR y componentes implementados.
+Preparación de la solución para evolución futura hacia ambientes cloud productivos.
