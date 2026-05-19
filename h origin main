@@ -1,0 +1,16 @@
+*   [33mb12e9d1[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Merge branch 'recuperacion'
+[31m|[m[32m\[m  
+[31m|[m * [33m2557c3c[m[33m ([m[1;32mrecuperacion[m[33m)[m Update README.md
+[31m|[m * [33m51c61a5[m Update README.md
+[31m|[m * [33m426bf84[m Se agrega cosmos_writer: persistencia de transacciones en Cosmos DB
+[31m|[m * [33m82ec9e3[m Se agrega monitor: observabilidad y métricas del sistema
+[31m|[m * [33mff86c19[m Se añade el modulo c4 (python)
+[31m|[m * [33m9dcde1f[m Actualizacion fotos README
+[31m|[m * [33m391b8df[m README
+[31m|[m * [33m5c8d7e2[m Se añaden los diagramas en la carpeta assets
+[31m|[m * [33m5552495[m Estructura del proyecto PAYFLOW_ARQ
+[31m|[m * [33m2baf9dc[m Estructura del proyecto PAYFLOW_ARQ
+* [33m1a65a76[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Estructura del proyecto PAYFLOW_ARQ
+* [33m03c53e9[m Se añade el modulo c4 (python)
+* [33ma4aa414[m Actualizacion fotos README
+* [33mb64e476[m README
