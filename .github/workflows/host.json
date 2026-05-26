@@ -12,21 +12,9 @@
       "Function": "Information"
     }
   },
-  "extensions": {
-    "eventHubs": {
-      "batchCheckpointFrequency": 5,
-      "eventProcessorOptions": {
-        "maxBatchSize": 10,
-        "prefetchCount": 300
-      }
-    },
-    "serviceBus": {
-      "prefetchCount": 0,
-      "messageHandlerOptions": {
-        "autoComplete": true,
-        "maxConcurrentCalls": 16
-      }
-    }
+  "extensionBundle": {
+    "id": "Microsoft.Azure.Functions.ExtensionBundle",
+    "version": "[4.*, 5.0.0)"
   },
   "functionTimeout": "00:05:00"
 }
