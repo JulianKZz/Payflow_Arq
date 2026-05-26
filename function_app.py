@@ -198,4 +198,4 @@ def monitor_metrics(req: func.HttpRequest) -> func.HttpResponse:
         }, indent=2),
         status_code=200,
         mimetype="application/json"
-    )
+    )        
