@@ -1,0 +1,6 @@
+azure-eventhub
+azure-servicebus
+azure-cosmos
+azure-monitor-opentelemetry
+azure-functions
+pandas
