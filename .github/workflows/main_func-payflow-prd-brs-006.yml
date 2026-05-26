@@ -71,3 +71,5 @@ jobs:
           app-name: 'func-payflow-prd-brs-006'
           slot-name: 'Production'
           package: '.'
+          scm-do-build-during-deployment: true
+          enable-oryx-build: true
